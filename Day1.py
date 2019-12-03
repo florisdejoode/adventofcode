@@ -1,6 +1,5 @@
  # Floris de Joode 2019
 
-day1input = []
 with open('day1input.txt', 'r') as day1input:
     day1 = day1input.readlines()
     
