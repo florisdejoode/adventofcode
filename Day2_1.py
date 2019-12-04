@@ -1,11 +1,4 @@
-with open('day2input.txt', 'r') as day2input:
-    intcode_string = day2input.readlines()[0]
-
-intcode_list = [int(s) for s in intcode_string.split(',')]
-
-intcode_list[1] = 12
-intcode_list[2] = 2
-
+#Floris de Joode 2019    
 def intcode_run(intcode, pos=0):
 
     result = list.copy(intcode)
@@ -29,6 +22,17 @@ def intcode_run(intcode, pos=0):
         result[r_pos] = x * y
         return intcode_run(result, pos + 4)
 
-solved_intcode = intcode_run(intcode_list)
-print(solved_intcode)
-print('result = ' + str(solved_intcode[0]))
+def main():
+    with open('day2input.txt', 'r') as day2input:
+        intcode_string = day2input.readlines()[0]
+
+    intcode_list = [int(s) for s in intcode_string.split(',')]
+
+    intcode_list[1] = 12
+    intcode_list[2] = 2
+    solved_intcode = intcode_run(intcode_list)
+    print(solved_intcode)
+    print('result = ' + str(solved_intcode[0]))
+
+if __name__ == "__main__":
+    main()
