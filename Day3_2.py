@@ -30,6 +30,15 @@ def getCoords(wire_instructions):
 
     return coords
 
+def stepsTakenToCoord(coord, wirepath):
+    steps = 0
+    for c in range(len(wirepath)):
+        steps += 1
+        if wirepath[c] == coord:
+            break
+
+    return steps
+
 def main():
     wire1 = []
     wire2 = []
@@ -50,12 +59,25 @@ def main():
 
     cross_coords = wire1set.intersection(wire2set)
 
-    cross_distances = []
-
+    wire1steps_tox = {}
     for coord in cross_coords:
-        cross_distances.append(manhatten(origin,coord))
+        wire1steps_tox[coord] = stepsTakenToCoord(coord, wire1coords)
 
-    print('The intersection with the lowest manhatten distance from origin is ',str(min(cross_distances)), 'steps away')
+    wire2steps_tox = {}
+    for coord in cross_coords:
+        wire2steps_tox[coord] = stepsTakenToCoord(coord, wire2coords)
+
+    combined_steps = {coord: wire1steps_tox.get(coord)+wire2steps_tox.get(coord) for coord in set(wire1steps_tox) & set(wire2steps_tox)}
+
+    lowest = 1E10
+    lowest_coord = [0,0]
+    for crossing in combined_steps:
+        if combined_steps.get(crossing) < lowest:
+            lowest = combined_steps.get(crossing)
+            lowest_coord = crossing
+
+    print(combined_steps)
+    print("The lowest amount of steps is >>" + str(lowest) + "<<", "at coord",str(lowest_coord))
 
 if __name__ == "__main__":
     main()
